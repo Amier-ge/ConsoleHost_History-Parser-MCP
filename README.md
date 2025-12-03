@@ -1,4 +1,4 @@
-# ConsoleHost Parser MCP Server
+# ConsoleHost_History Parser MCP Server
 
 ConsoleHost_history.txt Parser를 MCP(Model Context Protocol) Server로 제공
 
