@@ -26,7 +26,6 @@ VERSION = "1.0.0"
 
 
 class EWFImgInfo(pytsk3.Img_Info):
-    """E01 이미지 핸들러"""
 
     def __init__(self, ewf_handle):
         self._ewf_handle = ewf_handle
@@ -44,7 +43,6 @@ class EWFImgInfo(pytsk3.Img_Info):
 
 
 def open_image(image_path: str):
-    """이미지 파일 열기 (E01/DD 지원)"""
     image_path = os.path.abspath(image_path)
 
     if not os.path.exists(image_path):
@@ -62,7 +60,6 @@ def open_image(image_path: str):
 
 
 def find_consolehost_history(fs, path: str = "/", results: list = None) -> list:
-    """ConsoleHost_history.txt 파일 검색"""
     if results is None:
         results = []
 
@@ -118,7 +115,6 @@ def find_consolehost_history(fs, path: str = "/", results: list = None) -> list:
 
 
 def extract_file_content(entry) -> bytes | None:
-    """파일 내용 추출"""
     try:
         file_size = entry.info.meta.size
         offset = 0
@@ -139,7 +135,6 @@ def extract_file_content(entry) -> bytes | None:
 
 
 def get_username_from_path(file_path: str) -> str:
-    """경로에서 사용자명 추출"""
     path_parts = file_path.split('/')
     for i, part in enumerate(path_parts):
         if part.lower() == 'users' and i + 1 < len(path_parts):
@@ -148,7 +143,6 @@ def get_username_from_path(file_path: str) -> str:
 
 
 def parse_commands(content_bytes: bytes) -> tuple[list[dict], str | None]:
-    """바이트 데이터를 명령어 리스트로 파싱"""
     encodings = ['utf-8', 'utf-8-sig', 'cp949', 'euc-kr', 'latin-1']
 
     for encoding in encodings:
@@ -174,16 +168,6 @@ def parse_commands(content_bytes: bytes) -> tuple[list[dict], str | None]:
 
 @mcp.tool()
 def extract_consolehost_history(image_path: str, output_dir: str) -> dict[str, Any]:
-    """
-    E01/DD 포렌식 이미지에서 ConsoleHost_history.txt 파일을 추출하고 JSON으로 파싱합니다.
-
-    Args:
-        image_path: 포렌식 이미지 파일 경로 (E01 또는 DD/Raw)
-        output_dir: 추출된 파일을 저장할 디렉토리
-
-    Returns:
-        추출 결과 및 파싱된 명령어 목록
-    """
 
     # 이미지 파일 존재 확인
     if not Path(image_path).exists():
